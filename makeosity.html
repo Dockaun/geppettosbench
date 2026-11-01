@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Makeosity, Inc. · Geppetto Industries™</title>
+  <meta name="description" content="Makeosity, Inc. — the operating company behind Geppetto Industries. A decade building STEM programs across New York City public schools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fbfaf7;
+      --bg-deep: #f4f0e9;
+      --bg-green: #eef3ec;
+      --ink: #493f37;
+      --ink-2: #574d45;
+      --ink-3: #665d56;
+      --ink-4: #81776e;
+      --line: #ddd7cd;
+      --line-soft: #ece7de;
+      --sapling: #4f7156;
+      --sapling-soft: #75977a;
+      --mineral: #607782;
+      --wood: #8a6f52;
+      --font-display: 'Jost', system-ui, sans-serif;
+      --font-ui: 'Jost', system-ui, sans-serif;
+      --font-mono: 'DM Mono', ui-monospace, monospace;
+      --spine-x: 58px;
+      --gutter: clamp(22px, 6vw, 60px);
+      --content-max: 660px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      line-height: 1.68;
+      font-weight: 300;
+      letter-spacing: 0.005em;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(117,151,122,.06), transparent 24%),
+        radial-gradient(circle at 88% 58%, rgba(77,105,116,.035), transparent 30%),
+        var(--bg);
+    }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 26px var(--gutter) 22px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .back {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      transition: color .2s;
+    }
+    .back:hover { color: var(--sapling); }
+    .back::before {
+      content: '';
+      width: 22px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--wood));
+      transition: background .2s;
+    }
+    .back:hover::before { background: linear-gradient(90deg, transparent, var(--sapling)); }
+    .venture {
+      font-size: 10.5px;
+      color: var(--ink-4);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .body {
+      position: relative;
+      padding: 0 var(--gutter);
+    }
+    .spine {
+      position: absolute;
+      left: calc(var(--gutter) + var(--spine-x));
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent 0, var(--line) 64px, var(--line) calc(100% - 60px), transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .spine::after {
+      content: '';
+      position: absolute;
+      left: -1px;
+      width: 3px;
+      height: 66px;
+      background: linear-gradient(to bottom, transparent, var(--sapling), transparent);
+      opacity: .28;
+      border-radius: 2px;
+      animation: current-flow 18s linear infinite;
+    }
+    @keyframes current-flow {
+      0% { top: 0; opacity: 0; }
+      8% { opacity: .28; }
+      92% { opacity: .28; }
+      100% { top: calc(100% - 66px); opacity: 0; }
+    }
+
+    .node {
+      position: relative;
+      padding-left: calc(var(--spine-x) + 30px);
+      max-width: calc(var(--content-max) + var(--spine-x) + 30px);
+      z-index: 1;
+    }
+    .node::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--spine-x) - 3.5px);
+      top: 0.7em;
+      width: 8px;
+      height: 8px;
+      background: var(--bg);
+      border: 1.5px solid var(--wood);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .head {
+      padding: 58px 0 30px;
+      animation: rise .7s ease-out both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(30px, 5.4vw, 46px);
+      line-height: 1.16;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin-bottom: 22px;
+    }
+    .lede {
+      font-size: clamp(15px, 2vw, 17px);
+      color: var(--ink-3);
+      max-width: 52ch;
+    }
+
+    /* section */
+    .section {
+      padding: 26px 0;
+      margin-bottom: 4px;
+    }
+    .section-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 12px;
+    }
+    .section p {
+      color: var(--ink-2);
+      max-width: 56ch;
+      margin-bottom: 14px;
+    }
+    .section p:last-child { margin-bottom: 0; }
+    .section h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(19px, 2.6vw, 23px);
+      color: var(--ink);
+      letter-spacing: .005em;
+      margin-bottom: 14px;
+    }
+
+    /* the patent — highlighted as a branch */
+    .patent {
+      margin: 6px 0 4px;
+      padding: 18px 20px;
+      background: linear-gradient(90deg, rgba(139,115,85,.075), transparent);
+      border-left: 1px dashed var(--wood);
+      max-width: 56ch;
+    }
+    .patent-lead {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--wood);
+      margin-bottom: 10px;
+    }
+    .patent p { margin-bottom: 8px; }
+    .patent .pat-no {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--mineral);
+      letter-spacing: .02em;
+    }
+
+    /* facts strip on the spine */
+    .facts {
+      padding: 20px 0 8px;
+    }
+    .fact {
+      position: relative;
+      padding: 14px 0 14px calc(var(--spine-x) + 30px);
+      max-width: calc(var(--content-max) + var(--spine-x) + 30px);
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .fact:last-child { border-bottom: none; }
+    .fact::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--spine-x) - 3px);
+      top: 1.5em;
+      width: 7px;
+      height: 7px;
+      background: var(--bg);
+      border: 1.5px solid var(--sapling-soft);
+      border-radius: 50%;
+    }
+    .fact-key {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 4px;
+    }
+    .fact-val {
+      font-size: 15px;
+      color: var(--ink-2);
+      line-height: 1.5;
+      max-width: 52ch;
+    }
+    .fact-val strong { font-weight: 400; color: var(--ink); }
+
+    .bridge {
+      position: relative;
+      padding: 40px 0 60px calc(var(--spine-x) + 30px);
+      max-width: calc(var(--content-max) + var(--spine-x) + 30px);
+      z-index: 1;
+    }
+    .bridge::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--spine-x) - 4.5px);
+      top: 44px;
+      width: 10px;
+      height: 10px;
+      background: var(--sapling);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(79,113,86,.1);
+    }
+    .bridge-text {
+      font-family: var(--font-display);
+      font-size: clamp(17px, 2.4vw, 20px);
+      font-weight: 300;
+      color: var(--ink-2);
+      max-width: 46ch;
+      line-height: 1.5;
+    }
+    .bridge-text a {
+      color: var(--sapling);
+      text-decoration: none;
+      border-bottom: 1px solid var(--sapling-soft);
+    }
+    .bridge-text a:hover { color: var(--ink); border-color: var(--ink); }
+
+    footer {
+      border-top: 1px solid var(--line-soft);
+      padding: 34px var(--gutter) 46px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 22px;
+    }
+    .foot-brand {
+      font-size: 12px;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      font-weight: 500;
+    }
+    .foot-brand .tm { font-size: .7em; vertical-align: super; font-weight: 400; color: var(--ink-4); }
+    .foot-copy {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-4);
+      letter-spacing: .04em;
+      margin-top: 6px;
+    }
+    .foot-cert {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-4);
+      letter-spacing: .05em;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 620px) {
+      :root { --spine-x: 34px; --content-max: 100%; }
+      .top { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .node, .fact, .bridge { padding-left: calc(var(--spine-x) + 24px); }
+      footer { flex-direction: column; align-items: flex-start; }
+      .foot-cert { text-align: left; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .spine::after, .head { animation: none; }
+      .spine::after { opacity: .2; top: 40%; }
+    }
+    :focus-visible { outline: 2px solid var(--sapling); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <a class="back" href="index.html">Geppetto's Bench</a>
+      <span class="venture">Makeosity, Inc. · est. 2016</span>
+    </header>
+
+    <div class="body">
+      <div class="spine" aria-hidden="true"></div>
+
+      <section class="node head">
+        <p class="kicker">The operating company</p>
+        <h1>A decade of building things that work in real classrooms.</h1>
+        <p class="lede">Geppetto Industries is a venture of Makeosity, Inc. — a New York company that has spent ten years building STEM programs, training teachers, and inventing alongside students in the public schools that need it most.</p>
+      </section>
+
+      <section class="node section">
+        <p class="section-kicker">Since 2016</p>
+        <h2>Built inside the school system, not around it.</h2>
+        <p>Makeosity holds a ten-year relationship with New York City Public Schools: a contract to develop STEM programs, deliver professional development to teachers, and provide in-school STEM coaching in the classroom. The work is measured where it's hardest to fake — in how students and teachers actually use it.</p>
+        <p>Over that decade, Makeosity has raised more than $10 million through New York State Education Department and foundation funding to put those programs into schools, with development partners including the Carnegie Mellon Robotics Academy.</p>
+      </section>
+
+      <section class="node section">
+        <p class="section-kicker">Invention</p>
+        <div class="patent">
+          <p class="patent-lead">US Patent 9,755,481 B2</p>
+          <p>Dr. Karen Kaun invented a patented mobile charging device together with students from New York City Public Schools. The complete prototype was brought to life in partnership with engineers from Autodesk and Olin College of Engineering.</p>
+          <p class="pat-no">Students as inventors · industry and engineering partners as collaborators.</p>
+        </div>
+      </section>
+
+      <section class="node section founder">
+        <p class="section-kicker">The founder</p>
+        <h2>Dr. Karen P. Kaun</h2>
+        <p>Karen Kaun has spent twenty years doing one thing exceptionally well: taking a new idea from zero to multi-million-dollar scale, again and again, inside systems most people find impossible to move. She builds the thing, proves it works with hard evidence, and gets it funded.</p>
+        <p>At Makeosity she built FaceLab into a multi-million-dollar operation inside New York City Public Schools, reaching 26 schools, 3,000+ students, and 375 parents trained and paid as classroom robotics coaches, on more than $4.2M in public, corporate, and foundation funding, with external evaluation documenting measurable gains in student learning. Across her career she has won more than $10M from NYSED, the Fund for Public Schools, Microsoft, the W.K. Kellogg and William T. Grant Foundations, and federal research programs. She is the inventor on U.S. Patent 9,755,481 B2, taken from idea to issued patent.</p>
+        <p>Earlier, as co-founder of Knowledge iTrust, she built one of the earliest global e-learning networks and created Peace Diaries after 9/11, publishing student writing across 13+ countries in work covered by The New York Times and commended by President Bill Clinton. She holds a doctorate from Teachers College, Columbia University, where her research seeded a $1.2M federal grant.</p>
+        <p>Now she is building the biggest version of that pattern. Her research on co-adaptive human-AI collaboration is under review at the International Journal of Human-Computer Interaction and AI &amp; Society, and PinocchAIo is where it becomes a product: a licensable core with a market of every person and every industry that wants an AI of their own.</p>
+      </section>
+
+      <div class="facts">
+        <div class="fact">
+          <p class="fact-key">Founded</p>
+          <p class="fact-val"><strong>2016</strong> · New York</p>
+        </div>
+        <div class="fact">
+          <p class="fact-key">New York City Public Schools</p>
+          <p class="fact-val"><strong>Ten-year relationship.</strong> STEM program development, teacher professional development, and in-school classroom coaching.</p>
+        </div>
+        <div class="fact">
+          <p class="fact-key">Funding raised</p>
+          <p class="fact-val"><strong>$10M+</strong> across programs, from NYSED Learning Technology Grants, the Fund for Public Schools, Microsoft, and foundations.</p>
+        </div>
+        <div class="fact">
+          <p class="fact-key">Certification</p>
+          <p class="fact-val"><strong>MWBE certified</strong> with New York City and New York State.</p>
+        </div>
+        <div class="fact">
+          <p class="fact-key">Patent</p>
+          <p class="fact-val"><strong>US 9,755,481 B2</strong> · invented with NYCPS students, completed with Autodesk and Olin College of Engineering.</p>
+        </div>
+      </div>
+
+      <div class="bridge">
+        <p class="bridge-text">The same instinct — build the real thing, with the people it's for — now runs through Geppetto Industries. <a href="index.html">Back to the bench →</a></p>
+      </div>
+    </div>
+
+    <footer>
+      <div>
+        <p class="foot-brand">Geppetto Industries<span class="tm">™</span></p>
+        <p class="foot-copy">A venture of Makeosity, Inc. · © 2026 Makeosity, Inc.</p>
+      </div>
+      <p class="foot-cert">
+        MWBE certified · NYC &amp; NYS<br>
+        New York
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
