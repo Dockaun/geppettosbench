@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geppetto Industries™ · Geppetto's Bench</title>
+  <meta name="description" content="Geppetto Industries builds impossible shit and makes it real. A venture of Makeosity, Inc.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fbfaf7;
+      --bg-deep: #f4f0e9;
+      --bg-green: #eef3ec;
+      --ink: #493f37;
+      --ink-2: #574d45;
+      --ink-3: #665d56;
+      --ink-4: #81776e;
+      --line: #ddd7cd;
+      --line-soft: #ece7de;
+      --sapling: #4f7156;
+      --sapling-soft: #75977a;
+      --sapling-pale: #dfe9df;
+      --mineral: #607782;
+      --wood: #8a6f52;
+
+      --font-display: 'Jost', system-ui, sans-serif;
+      --font-ui: 'Jost', system-ui, sans-serif;
+      --font-mono: 'DM Mono', ui-monospace, monospace;
+
+      --spine-x: 58px;
+      --gutter: clamp(22px, 6vw, 60px);
+      --content-max: 640px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      line-height: 1.68;
+      font-weight: 300;
+      letter-spacing: 0.005em;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 14% 12%, rgba(117,151,122,.06), transparent 24%),
+        radial-gradient(circle at 88% 62%, rgba(77,105,116,.035), transparent 30%),
+        var(--bg);
+    }
+
+    /* ---- top bar ---- */
+    .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 26px var(--gutter) 22px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .brand {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+    }
+    .brand .mark { margin-top: 2px; }
+
+    /* small structural node gesture beside the wordmark */
+    .mark {
+      width: 15px;
+      height: 15px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .mark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1.4px solid var(--wood);
+      border-radius: 50%;
+    }
+    .mark::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      right: -3px;
+      top: -3px;
+      background: var(--sapling);
+      border-radius: 0 70% 50% 70%;
+      transform: rotate(-25deg);
+    }
+
+    .wordmark {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .wordmark .tm { font-size: .62em; vertical-align: super; font-weight: 400; color: var(--ink-4); letter-spacing: 0; }
+
+    .brand-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .tagline {
+      font-family: var(--font-display);
+      font-size: 12.5px;
+      font-weight: 300;
+      letter-spacing: .01em;
+      color: var(--ink-3);
+      line-height: 1.2;
+    }
+    .tagline em {
+      font-style: normal;
+      color: var(--sapling);
+      font-weight: 400;
+    }
+
+    .venture a,
+    .foot-venture a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+      transition: color .2s, border-color .2s;
+    }
+    .venture a:hover,
+    .foot-venture a:hover {
+      color: var(--sapling);
+      border-color: var(--sapling-soft);
+    }
+
+    .venture {
+      font-size: 10.5px;
+      color: var(--ink-4);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      border-left: 1px solid var(--line);
+      padding-left: 12px;
+      line-height: 1.4;
+    }
+
+    .domain {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-4);
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    /* ---- spine ---- */
+    .flow {
+      position: relative;
+      padding: 0 var(--gutter) 0;
+    }
+
+    .spine {
+      position: absolute;
+      left: calc(var(--gutter) + var(--spine-x));
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent 0, var(--line) 70px, var(--line) calc(100% - 60px), transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .spine::after {
+      content: '';
+      position: absolute;
+      left: -1px;
+      width: 3px;
+      height: 70px;
+      background: linear-gradient(to bottom, transparent, var(--sapling), transparent);
+      opacity: .3;
+      border-radius: 2px;
+      animation: current-flow 17s linear infinite;
+    }
+    @keyframes current-flow {
+      0% { top: 0; opacity: 0; }
+      8% { opacity: .3; }
+      92% { opacity: .3; }
+      100% { top: calc(100% - 70px); opacity: 0; }
+    }
+
+    /* generic node on the spine */
+    .node {
+      position: relative;
+      padding-left: calc(var(--spine-x) + 30px);
+      max-width: calc(var(--content-max) + var(--spine-x) + 30px);
+      z-index: 1;
+    }
+    .node::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--spine-x) - 3.5px);
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      background: var(--bg);
+      border: 1.5px solid var(--wood);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    /* ---- hero ---- */
+    .hero {
+      min-height: calc(100vh - 130px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      animation: rise .7s ease-out both;
+    }
+    .hero::before { top: 3.4em; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 26px;
+    }
+    .eyebrow .tm { font-size: .8em; vertical-align: super; }
+
+    .ethos {
+      font-family: var(--font-display);
+      font-size: clamp(14px, 2vw, 16.5px);
+      font-weight: 400;
+      line-height: 1.5;
+      letter-spacing: .02em;
+      color: var(--sapling);
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(32px, 6vw, 52px);
+      line-height: 1.14;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      max-width: 15ch;
+      margin-bottom: 24px;
+    }
+
+    .hero .sub {
+      font-size: clamp(15px, 2vw, 17px);
+      color: var(--ink-3);
+      max-width: 46ch;
+      opacity: .92;
+    }
+
+    .scroll-cue {
+      margin-top: 46px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .scroll-cue::after {
+      content: '';
+      width: 34px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--wood), transparent);
+    }
+
+    /* ---- section marker ---- */
+    .section-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 6px;
+    }
+
+    /* ---- 01 · on the bench ---- */
+    .bench-node {
+      padding-top: 34px;
+      padding-bottom: 34px;
+      margin-bottom: 8px;
+    }
+    .bench-node::before {
+      border-color: var(--sapling);
+      width: 11px;
+      height: 11px;
+      left: calc(var(--spine-x) - 5px);
+      top: 0.4em;
+      box-shadow: 0 0 0 0 rgba(79,113,86,.3);
+      animation: node-pulse 4s ease-in-out infinite;
+    }
+    @keyframes node-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(79,113,86,.26); }
+      50% { box-shadow: 0 0 0 7px rgba(79,113,86,0); }
+    }
+
+    .build-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+    .build-name {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3.6vw, 30px);
+      font-weight: 400;
+      letter-spacing: .005em;
+      color: var(--ink);
+    }
+    .build-name .tm { font-size: .5em; vertical-align: super; font-weight: 300; color: var(--ink-4); }
+    .build-name .p { color: var(--sapling); }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--sapling);
+      padding: 3px 0;
+    }
+    .status .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--sapling);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(79,113,86,.14);
+    }
+
+    .promise {
+      font-family: var(--font-display);
+      font-size: clamp(17px, 2.4vw, 20px);
+      font-weight: 300;
+      color: var(--sapling);
+      letter-spacing: .01em;
+      margin: 16px 0 20px;
+    }
+
+    .thesis {
+      font-family: var(--font-display);
+      font-size: clamp(19px, 2.9vw, 26px);
+      font-weight: 300;
+      line-height: 1.34;
+      letter-spacing: .002em;
+      color: var(--ink);
+      max-width: 24ch;
+      margin: 20px 0 22px;
+    }
+    .thesis em {
+      font-style: normal;
+      color: var(--sapling);
+      font-weight: 400;
+    }
+
+    .model-hint {
+      margin-top: 18px;
+      padding-left: 15px;
+      border-left: 1px solid var(--mineral);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 300;
+      line-height: 1.6;
+      letter-spacing: .01em;
+      color: var(--mineral);
+      max-width: 48ch;
+    }
+
+    .build-body {
+      font-size: 15px;
+      color: var(--ink-2);
+      max-width: 54ch;
+      line-height: 1.7;
+    }
+    .build-body + .build-body { margin-top: 14px; }
+
+    /* small branch: the two phrases from P */
+    .threads {
+      margin: 24px 0 4px;
+      padding: 15px 18px;
+      background: linear-gradient(90deg, rgba(139,115,85,.07), transparent);
+      border-left: 1px dashed var(--wood);
+      max-width: 54ch;
+    }
+    .threads span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 15px;
+      color: var(--ink-2);
+      letter-spacing: .01em;
+    }
+    .threads span + span { margin-top: 6px; }
+    .threads .lead {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--wood);
+      margin-bottom: 9px;
+    }
+
+    /* ---- 02 · open bench ---- */
+    .open-node {
+      padding-top: 30px;
+      padding-bottom: 30px;
+      margin-bottom: 8px;
+      opacity: .58;
+      transition: opacity .5s ease;
+    }
+    .open-node:hover { opacity: .82; }
+    .open-node::before {
+      border-style: dashed;
+      border-color: var(--line);
+      background: var(--bg);
+    }
+    .open-name {
+      font-family: var(--font-display);
+      font-size: clamp(16px, 2.2vw, 19px);
+      font-weight: 300;
+      color: var(--ink-3);
+      letter-spacing: .01em;
+    }
+    .open-note {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-4);
+      letter-spacing: .02em;
+      margin-top: 6px;
+    }
+
+    /* ---- founding marker ---- */
+    .founding {
+      position: relative;
+      padding-left: calc(var(--spine-x) + 30px);
+      padding-top: 40px;
+      padding-bottom: 30px;
+      max-width: calc(var(--content-max) + var(--spine-x) + 30px);
+      z-index: 1;
+    }
+    .founding::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--spine-x) - 4.5px);
+      top: 44px;
+      width: 10px;
+      height: 10px;
+      background: var(--mineral);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(96,119,130,.1);
+    }
+    .founding-main {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--ink-2);
+      letter-spacing: .02em;
+    }
+    .founding-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--mineral);
+      letter-spacing: .06em;
+      margin-top: 7px;
+    }
+
+    /* ---- footer ---- */
+    footer {
+      border-top: 1px solid var(--line-soft);
+      margin-top: 20px;
+      padding: 34px var(--gutter) 46px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 22px;
+    }
+    .foot-brand {
+      font-size: 12px;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      font-weight: 500;
+    }
+    .foot-brand .tm { font-size: .7em; vertical-align: super; font-weight: 400; color: var(--ink-4); }
+    .foot-venture {
+      font-size: 12.5px;
+      color: var(--ink-3);
+      font-weight: 300;
+      margin-top: 6px;
+    }
+    .foot-copy {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-4);
+      letter-spacing: .04em;
+      margin-top: 6px;
+    }
+    .foot-place {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-4);
+      letter-spacing: .06em;
+      text-align: right;
+      line-height: 1.7;
+    }
+    .foot-place .toward { color: var(--sapling-soft); }
+
+    /* ---- mobile ---- */
+    @media (max-width: 620px) {
+      :root { --spine-x: 34px; --content-max: 100%; }
+      .top { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .venture { border-left: none; padding-left: 0; }
+      .hero { min-height: calc(100vh - 150px); }
+      .node, .founding { padding-left: calc(var(--spine-x) + 24px); }
+      footer { flex-direction: column; align-items: flex-start; }
+      .foot-place { text-align: left; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .spine::after, .bench-node::before, .hero { animation: none; }
+      .spine::after { opacity: .22; top: 40%; }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--sapling);
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="top">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <div class="brand-stack">
+          <span class="wordmark">Geppetto Industries<span class="tm">™</span></span>
+          <span class="tagline">Build impossible <em>shit</em> and make it real.</span>
+        </div>
+      </div>
+      <span class="venture">A venture of <a href="makeosity.html">Makeosity,&nbsp;Inc.</a></span>
+    </header>
+
+    <div class="flow">
+      <div class="spine" aria-hidden="true"></div>
+
+      <!-- HERO -->
+      <section class="hero node" aria-label="Welcome to Geppetto's Bench">
+        <p class="ethos">Imagine beyond what's possible now.<br>Use what's possible next to build it.</p>
+        <h1>Welcome to Geppetto's Bench.</h1>
+        <p class="sub">A place for building things that are not supposed to exist yet.</p>
+        <p class="scroll-cue">On the bench</p>
+      </section>
+
+      <!-- 01 · ON THE BENCH -->
+      <section class="node bench-node" aria-label="On the bench: PinocchAIo">
+        <p class="section-kicker">01 — On the bench · our first seed project</p>
+        <div class="build-head">
+          <span class="build-name"><span class="p">PinocchAIo</span><span class="tm">™</span> · P</span>
+          <span class="status"><span class="dot" aria-hidden="true"></span>Active build</span>
+        </div>
+        <p class="thesis">Everyone is building smarter generic AI. We're building the one that becomes a <em>completely different AI</em> for every person and every industry.</p>
+        <p class="build-body">Today's AI is one engine everyone shares — it forgets who you are the moment you close the tab. PinocchAIo becomes yours: it learns how you think, remembers what you're working toward, and adapts to you over months and years. Every person gets their own AI. Every industry gets its own.</p>
+        <p class="model-hint">A licensable core. Geppetto builds the surface, or you build your own.</p>
+        <div class="threads">
+          <p class="lead">The promise</p>
+          <span>PinocchAIo.</span>
+          <span>A real AI, made with you.</span>
+        </div>
+      </section>
+
+      <!-- 02 · OPEN BENCH -->
+      <section class="node open-node" aria-label="Open bench">
+        <p class="section-kicker">02 — Open bench</p>
+        <p class="open-name">Next impossible thing · not yet named</p>
+        <p class="open-note">More coming to the bench.</p>
+      </section>
+
+      <!-- FOUNDING -->
+      <div class="founding">
+        <p class="founding-main">Founded August 12, 2026</p>
+        <p class="founding-sub">Day Zero · 12 Aug 2026</p>
+      </div>
+    </div>
+
+    <footer>
+      <div>
+        <p class="foot-brand">Geppetto Industries<span class="tm">™</span></p>
+        <p class="foot-venture">A venture of <a href="makeosity.html">Makeosity, Inc.</a></p>
+        <p class="foot-copy">© 2026 Makeosity, Inc.</p>
+      </div>
+      <p class="foot-place">
+        Brooklyn · Philadelphia<br>
+        <span class="toward">looking toward Andalusia</span>
+      </p>
+    </footer>
+
+  </div>
+</body>
+</html>
